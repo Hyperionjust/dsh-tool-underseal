@@ -2,6 +2,8 @@
 
 [English](README.md) | **中文**
 
+![CI](https://github.com/Hyperionjust/dsh-tool-underseal/actions/workflows/ci.yml/badge.svg)
+
 > **一句话定位：** 聊天是运输，不是授权。授权 = 哈希密封的 assignment 文件；证据 = 只追加、任何第三方可重算；所有边界都 fail-closed——密封工具、worker 签到锁、字节级供应链哨兵，一条 `dsh plugin add dsh-tool-underseal` 全部到手。
 
 > **已在 DSH 0.1.0-rc.5 实测** —— 运行时挂载冒烟测试通过：`dsh plugin add` + `dsh --dump-config` 挂载双层（`underseal` 与 `underseal-guard`），完整仪式链（doctor → seal → start → event → audit → retire）在真实 Git 仓库中经 vendored 适配器端到端跑通。两条实战笔记：`dsh plugin add` 接**含空格的本地路径**时要用字面双引号包裹（`dsh plugin --profile p add '"D:\项目路径"'`，CLI 经 shell 拼 pnpm 参数不加引号）；seal 之后、worker 开始之前必须先提交 lead plane（`.underseal/`、`.underseal-runs/`），否则规范性范围审计会对未提交的控制面文件 fail-closed（见随包 skill）。
@@ -39,8 +41,8 @@ Underseal 是一个哈希密封的文件授权协议，用于在 AI agent 之间
 本插件就是修正：权威住在文件里，不住在提示词里。稳态回合只携带 8 个工具
 schema（约 1–2K tokens）加上有界的工具结果（`{marker, payload, exitCode,
 stdout, stderr}`）；assignment 只被必须服从它的 worker 精确读一次，证据
-永不重新进入上下文。按任务归一化（同任务密封 vs 不密封）的基准，是本项目
-下一步要公布的测量。
+永不重新进入上下文。按任务归一化（同任务密封 vs 不密封）的基准见
+[BENCHMARK.md](BENCHMARK.md)——跑一遍，填一行真实的 Δ。
 
 ## 状态：出树 bundle
 

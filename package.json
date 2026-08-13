@@ -57,7 +57,8 @@
     "typescript": "^5.7.0"
   },
   "scripts": {
-    "prepare": "tsc -p tsconfig.json"
+    "prepare": "npm run build",
+    "build": "tsc -p tsconfig.json"
   },
   "keywords": [
     "dsh",
@@ -65,7 +66,13 @@
     "underseal",
     "delegation",
     "cross-agent",
+    "multi-agent",
     "sealed-assignment",
+    "agent-security",
+    "ai-agents",
+    "coding-agent",
+    "cordis",
+    "typescript",
     "plugin",
     "bundle"
   ],

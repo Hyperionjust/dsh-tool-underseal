@@ -2,6 +2,8 @@
 
 **English** | [中文](README.zh.md)
 
+![CI](https://github.com/Hyperionjust/dsh-tool-underseal/actions/workflows/ci.yml/badge.svg)
+
 > **The one-breath pitch:** chat is transport, not authorization. Authority is a
 > hash-sealed assignment file; evidence is append-only and re-derivable by any
 > third party; and every boundary fails closed — sealed tools, a worker
@@ -66,7 +68,7 @@ A steady-state turn carries the 8 tool schemas (~1–2K tokens) plus bounded
 tool results (`{marker, payload, exitCode, stdout, stderr}`); the assignment
 is read exactly once by the worker that must obey it, and evidence never
 re-enters the context. A normalized per-task benchmark (sealed vs. unsealed,
-same task) is the next measurement this project publishes.
+same task) is in [BENCHMARK.md](BENCHMARK.md) — run it and fill in a real Δ.
 
 ## Status: out-of-tree bundle
 

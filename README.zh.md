@@ -1,5 +1,7 @@
 # dsh-tool-underseal
 
+[English](README.md) | **中文**
+
 > **一句话定位：** 聊天是运输，不是授权。授权 = 哈希密封的 assignment 文件；证据 = 只追加、任何第三方可重算；所有边界都 fail-closed——密封工具、worker 签到锁、字节级供应链哨兵，一条 `dsh plugin add dsh-tool-underseal` 全部到手。
 
 > **已在 DSH 0.1.0-rc.5 实测** —— 运行时挂载冒烟测试通过：`dsh plugin add` + `dsh --dump-config` 挂载双层（`underseal` 与 `underseal-guard`），完整仪式链（doctor → seal → start → event → audit → retire）在真实 Git 仓库中经 vendored 适配器端到端跑通。两条实战笔记：`dsh plugin add` 接**含空格的本地路径**时要用字面双引号包裹（`dsh plugin --profile p add '"D:\项目路径"'`，CLI 经 shell 拼 pnpm 参数不加引号）；seal 之后、worker 开始之前必须先提交 lead plane（`.underseal/`、`.underseal-runs/`），否则规范性范围审计会对未提交的控制面文件 fail-closed（见随包 skill）。

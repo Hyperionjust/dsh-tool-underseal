@@ -1,5 +1,7 @@
 # dsh-tool-underseal
 
+**English** | [中文](README.zh.md)
+
 > **The one-breath pitch:** chat is transport, not authorization. Authority is a
 > hash-sealed assignment file; evidence is append-only and re-derivable by any
 > third party; and every boundary fails closed — sealed tools, a worker

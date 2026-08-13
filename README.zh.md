@@ -74,6 +74,8 @@ dsh --profile <name> --dump-config   # 应看到 "# == dsh-tool-underseal" 层
 dsh --profile <name>
 ```
 
+卸载：`dsh plugin --profile <name> remove dsh-tool-underseal` 会同时移除依赖与它的层。
+
 请如实看待 `allowBuilds`：它意味着允许在**安装期**、在 agent 沙箱之外执行本包的代码。不想授予该权限时，请优先用 npm 或 tarball 形态。
 
 ## 服务 API

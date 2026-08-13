@@ -106,6 +106,9 @@ dsh --profile <name> --dump-config   # shows a "# == dsh-tool-underseal" layer
 dsh --profile <name>
 ```
 
+Uninstall: `dsh plugin --profile <name> remove dsh-tool-underseal` removes both
+the dependency and its layer.
+
 Treat `allowBuilds` as what it is: permission to execute this package's code
 at install time, outside any agent sandbox. Prefer the npm or tarball forms
 when you do not want to grant it.

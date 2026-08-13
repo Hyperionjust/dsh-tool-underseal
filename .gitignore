@@ -3,6 +3,8 @@ node_modules/
 lib/
 .tmp-*
 *.tgz
+*.npmrc
+npmrc-publish
 
 # Local-only engineering artifacts (contain machine-specific absolute paths)
 tsconfig.verify.json

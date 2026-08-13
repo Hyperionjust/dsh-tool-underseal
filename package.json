@@ -26,6 +26,7 @@
     "cordis.patch.yml",
     "cordis.pin.json",
     "scripts/repin.ps1",
+    "README.zh.md",
     "python/underseal.py",
     "python/underseal_adapter.py",
     "python/underseal.pin.json",
@@ -70,10 +71,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/<你的用户名>/dsh-tool-underseal.git"
+    "url": "git+https://github.com/Hyperionjust/dsh-tool-underseal.git"
   },
-  "homepage": "https://github.com/<你的用户名>/dsh-tool-underseal#readme",
+  "homepage": "https://github.com/Hyperionjust/dsh-tool-underseal#readme",
   "bugs": {
-    "url": "https://github.com/<你的用户名>/dsh-tool-underseal/issues"
+    "url": "https://github.com/Hyperionjust/dsh-tool-underseal/issues"
   }
 }

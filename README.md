@@ -1,5 +1,11 @@
 # dsh-tool-underseal
 
+> **The one-breath pitch:** chat is transport, not authorization. Authority is a
+> hash-sealed assignment file; evidence is append-only and re-derivable by any
+> third party; and every boundary fails closed — sealed tools, a worker
+> check-in lock, and byte-pinned supply-chain sentinels — behind a single
+> `dsh plugin add dsh-tool-underseal`.
+
 > **Tested on DSH 0.1.0-rc.5** — runtime mounting smoke test passed: `dsh plugin
 > add` + `dsh --dump-config` mounts both layers (`underseal` and
 > `underseal-guard`), and the full ceremony chain
@@ -26,6 +32,39 @@ The package also ships a DSH skill (`skills/underseal-delegation/SKILL.md`) that
 documents the delegation workflow in DSH terms (subagent / subagent_fork /
 workflow / goal), and reference files under
 `skills/underseal-delegation/references/`.
+
+## Field record: the ceremony's shape in production
+
+A three-day production run of the original underseal workflow (Codex as lead,
+DeepSeek workers, August 2026) left OpenAI-side metering worth reading as a
+design signal — with two caveats: it predates this DSH plugin, and it mixes
+Codex's own context with underseal's, so no clean per-part attribution exists.
+
+| Metric (3 days, weighted) | Value |
+|---|---|
+| Input cache hit rate | **99.164%** |
+| Total input | 289,510,152 tokens |
+| Total output | 1,669,568 tokens |
+| Input/output ratio | ≈ **173:1** |
+| Effective input cost at 0.1× cached reads | ≈ 31.1M tokens (≈ 89% saved) |
+
+Two honest readings:
+
+1. **The 99% cache hit rate is a property to keep.** Sealed assignments,
+   receipts, dispatch bindings, and ceremony rules are stable, hash-bound
+   text, so long prompt prefixes cache almost perfectly. Protocol stability
+   is cache-friendliness.
+2. **The 173:1 ratio is the tax of carrying the ceremony inside the chat.**
+   The same roughly 100K-token prefix was re-read thousands of times; caching
+   made it cheap but did not make it light — rate limits, latency, and the
+   exposed prompt surface all paid for it.
+
+This plugin is the correction: authority lives in files, not in the prompt.
+A steady-state turn carries the 8 tool schemas (~1–2K tokens) plus bounded
+tool results (`{marker, payload, exitCode, stdout, stderr}`); the assignment
+is read exactly once by the worker that must obey it, and evidence never
+re-enters the context. A normalized per-task benchmark (sealed vs. unsealed,
+same task) is the next measurement this project publishes.
 
 ## Status: out-of-tree bundle
 

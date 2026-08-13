@@ -1,0 +1,18 @@
+# Line-ending discipline. Several files in this repo are BYTE-PINNED: the
+# E1/E2/E3 sentinels hash the exact reviewed bytes (python/underseal.py,
+# python/underseal.pin.json, cordis.patch.yml, cordis.pin.json, the SKILL.md
+# body). Git must never rewrite them to CRLF on checkout, or the sentinels
+# fail closed on Windows clones.
+#
+# `eol=lf` here overrides core.autocrlf for the whole tree: text files stay LF
+# in the repository AND in every working copy, on every platform.
+* text=auto eol=lf
+
+# Byte-pinned artifacts (redundant with the global rule; kept explicit so a
+# future edit to the rule above cannot silently un-protect them).
+python/underseal.py text eol=lf
+python/underseal_adapter.py text eol=lf
+python/underseal.pin.json text eol=lf
+cordis.patch.yml text eol=lf
+cordis.pin.json text eol=lf
+skills/underseal-delegation/SKILL.md text eol=lf

@@ -1,0 +1,14 @@
+# Build artifacts and local-only files (kept out of the public repository)
+node_modules/
+lib/
+.tmp-*
+*.tgz
+
+# Local-only engineering artifacts (contain machine-specific absolute paths)
+tsconfig.verify.json
+verify-report.txt
+verify-trace.txt
+HANDOFF.md
+reviews/
+guard-qc-checklist.md
+.npm-cache/

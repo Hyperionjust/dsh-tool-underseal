@@ -1,0 +1,79 @@
+{
+  "name": "dsh-tool-underseal",
+  "description": "Model-facing typed tools wrapping the frozen, reviewed underseal adapter for the DeepSeek Harness",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./guard": {
+      "types": "./lib/types/guard.d.ts",
+      "default": "./lib/guard.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/guard.js",
+    "lib/guard-core.js",
+    "lib/sentinels.js",
+    "lib/types/**/*.d.ts",
+    "cordis.patch.yml",
+    "cordis.pin.json",
+    "scripts/repin.ps1",
+    "python/underseal.py",
+    "python/underseal_adapter.py",
+    "python/underseal.pin.json",
+    "python/.gitattributes",
+    "NOTICE",
+    "skills/underseal-delegation/SKILL.md",
+    "skills/underseal-delegation/references/assignment-templates.md",
+    "skills/underseal-delegation/references/maintenance.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-subprocess": "^0.1.0-rc.0",
+    "@deepseek-ai/dsh-tools": "^0.1.0-rc.0"
+  },
+  "dependencies": {
+    "@deepseek-ai/schemastery": "^3.18.1"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-subprocess": "^0.1.0-rc.0",
+    "@deepseek-ai/dsh-tools": "^0.1.0-rc.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  },
+  "scripts": {
+    "prepare": "tsc -p tsconfig.json"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "underseal",
+    "delegation",
+    "cross-agent",
+    "sealed-assignment",
+    "plugin",
+    "bundle"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/<你的用户名>/dsh-tool-underseal.git"
+  },
+  "homepage": "https://github.com/<你的用户名>/dsh-tool-underseal#readme",
+  "bugs": {
+    "url": "https://github.com/<你的用户名>/dsh-tool-underseal/issues"
+  }
+}

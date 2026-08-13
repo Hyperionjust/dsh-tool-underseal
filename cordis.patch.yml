@@ -1,0 +1,29 @@
+# Bundle layer for `dsh-tool-underseal`.
+#
+# Applied automatically when a profile lists this bundle (declared by the
+# `dsh.bundle` manifest in package.json; installed with `dsh plugin add`).
+# The plugin injects ['tools', 'subprocess'], both provided by the
+# `@deepseek-ai/dsh-base` bundle that precedes every out-of-tree bundle.
+- insert:
+    - id: underseal
+      name: dsh-tool-underseal
+      # Defaults are self-contained: the vendored reviewed adapter under
+      # python/ runs through the platform's `python`/`python3` launcher.
+      # Override only to point at a separately provisioned adapter install.
+      #
+      # config:
+      #   adapterPath: /absolute/path/to/underseal_adapter.py
+      #   pythonPath: python
+      #   graceMs: 30000
+      #   outputMaxBytes: 65536
+      #   spillMaxBytes: 4194304
+    - id: underseal-guard
+      name: dsh-tool-underseal/guard
+      # T2 enforcement seam: denies write/edit/pwsh/bash while a sealed OPEN
+      # full-ceremony assignment has an INITIAL dispatch with no READY
+      # evidence, pointing the worker at underseal_start. Injects only
+      # ['tools'] (provided by the @deepseek-ai/dsh-base bundle).
+      #
+      # config:
+      #   blockedTools: [write, edit, pwsh, bash]
+      #   cacheTtlMs: 2000

@@ -1,0 +1,35 @@
+{
+  // Self-contained NodeNext config so the package compiles OUTSIDE the
+  // monorepo with a plain `tsc -p .`: `outDir` emits runtime JS to `lib/`
+  // while `declarationDir` emits `.d.ts` to `lib/types/`, reproducing the
+  // exact `main`/`types` layout `package.json` declares.
+  //
+  // The monorepo instead emits JS with tsdown and declarations with
+  // `outDir: "lib/types"` behind `extends: "../../../tsconfig.base.json"`.
+  // When inlining this package, replace this file with that shape and add the
+  // package to `tsconfig.host.json` references (see README § "Inlining").
+  "compilerOptions": {
+    "target": "es2024",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "lib": ["es2024"],
+    "rootDir": "src",
+    "outDir": "lib",
+    "declarationDir": "lib/types",
+    "declaration": true,
+    "declarationMap": false,
+    "sourceMap": false,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node"]
+  },
+  "include": ["src"]
+}

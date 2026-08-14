@@ -14,7 +14,7 @@
 
 import assert from 'node:assert/strict'
 import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
-import { join } from 'node:path'
+import { join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { evaluateGuard, findRepoRoot, isAbsentError, classifyDispatchGeneration, isPathInside } from '../lib/guard-core.js'
 
@@ -466,15 +466,20 @@ scenario('(g) helper units')
     const nested = join(r.root, 'a', 'b', 'c')
     mkdirSync(nested, { recursive: true })
     assert.equal(findRepoRoot(realFs, nested), r.root)
-    const bare = join(TMP_ROOT, `repo-${++repoCounter}-bare`)
-    mkdirSync(bare, { recursive: true })
-    assert.equal(findRepoRoot(realFs, bare), null)
+    // Simulate "no .git anywhere" with a stat that always reports absence, so
+    // the walk is unaffected by the test running inside a real git checkout.
+    const noGitFs = { stat: () => { throw errWithCode('ENOENT', 'absent') }, readdir: realFs.readdir, readFile: realFs.readFile }
+    assert.equal(findRepoRoot(noGitFs, join(r.root, 'x', 'y')), null)
   })
   check('isPathInside containment', () => {
-    assert.equal(isPathInside('C:\\repo', 'C:\\repo'), true)
-    assert.equal(isPathInside('C:\\repo', 'C:\\repo\\sub\\file.txt'), true)
-    assert.equal(isPathInside('C:\\repo', 'C:\\repo2\\file.txt'), false)
-    assert.equal(isPathInside('C:\\repo', 'C:\\other'), false)
+    // Platform-neutral: build absolute paths with resolve/join instead of
+    // hardcoding a drive letter, so the suite passes on both Windows and Linux.
+    const root = resolve('/repo')
+    const sibling = resolve('/repo2')
+    assert.equal(isPathInside(root, root), true)
+    assert.equal(isPathInside(root, join(root, 'sub', 'file.txt')), true)
+    assert.equal(isPathInside(root, join(sibling, 'file.txt')), false)
+    assert.equal(isPathInside(root, resolve('/other')), false)
   })
 }
 

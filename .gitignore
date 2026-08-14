@@ -5,6 +5,9 @@ lib/
 *.tgz
 *.npmrc
 npmrc-publish
+__pycache__/
+bench/.dsh-bench/
+bench/bench-fixture-*/
 
 # Local-only engineering artifacts (contain machine-specific absolute paths)
 tsconfig.verify.json

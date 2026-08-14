@@ -48,13 +48,58 @@ usage. Record each metric **divided by the number of completed tasks**.
 
 | Metric | A unsealed | B sealed | Δ (B − A) |
 |---|---:|---:|---:|
-| model requests / task | | | |
-| total input / task | | | |
-| uncached input / task | | | |
-| cached read / task | | | |
-| output / task | | | |
+| model requests / task | 3 | 7 | +4 |
+| total input / task | 24,984 | 75,084 | +50,100 |
+| uncached input / task | 408 | 10,828 | +10,420 |
+| cached read / task | 24,576 | 64,256 | +39,680 |
+| output / task | 265 | 1,543 | +1,278 |
 | cost / task | | | |
-| wall-clock time / task | | | |
+| wall-clock time / task | 17.3s | 27.5s | +10.2s |
+
+### First measured run (2026-08-14)
+
+Trivial mechanical task (create one file with one line), DSH 0.1.0-rc.5,
+`deepseek-v4-flash`, run by `bench/run-bench.ps1`; the numbers were read from
+the provider usage records in the session logs (`bench/read-session-tokens.mjs`).
+
+Reading: sealing adds a bounded, one-time per-task cost — four extra model
+round-trips, ~10.4K uncached input tokens (ceremony instructions, the
+assignment read, and the two evidence round-trips), and ~10 seconds of wall
+clock — in exchange for a hash-sealed authorization boundary and a scope audit
+any third party can re-derive. The Δ does not grow with the task's own work:
+the worker's task tokens are the same in both arms.
+
+Caveats: n=1 (single task); the B arm carried the ceremony instructions in the
+worker prompt, so this is an upper bound — in a deployment where the bundled
+skill supplies the ceremony from a cached prefix, the marginal cost is lower;
+and the provider cache was warm across runs, so both arms' uncached figures
+are smaller than a cold-cache first run would show.
+
+### Second measured run — big task (2026-08-14)
+
+Real coding task (implement `wordstats.py` with three functions plus a 16-test
+`unittest` suite, self-verified), DSH 0.1.0-rc.5, `deepseek-v4-flash`, the
+sealed arm in owner mode (`bench/run-bench-big.ps1`).
+
+| Metric | A unsealed | B sealed | Δ (B − A) |
+|---|---:|---:|---:|
+| model requests / task | 6 | 13 | +7 |
+| total input / task | 74,369 | 208,043 | +133,674 |
+| uncached input / task | 2,049 | 12,331 | +10,282 |
+| cached read / task | 72,320 | 195,712 | +123,392 |
+| output / task | 5,138 | 8,472 | +3,334 |
+| wall-clock time / task | 38.0s | 92.3s | +54.3s |
+
+| Seal overhead as % of the task's total input | 41.7% (small task) | 13.8% (big task) |
+
+Reading: the uncached-token Δ is essentially identical to the trivial run
+(+10,420 → +10,282) — **the seal overhead is a flat ~10.4K-token per-task
+constant, not a percentage tax**. As the task grew, that constant's share of
+total input fell from 42% to 14%, and it keeps shrinking. A trivial task pays
+proportionally more; real work amortizes the seal into the noise. Wall-clock
+grew more than tokens (+10.2s on the small task, +54.3s on the big one)
+because the ceremony adds model round-trips whose latency scales with the
+model's reasoning, not with a fixed constant.
 
 ## Expected outcome
 

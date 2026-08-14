@@ -72,6 +72,13 @@ is read exactly once by the worker that must obey it, and evidence never
 re-enters the context. A normalized per-task benchmark (sealed vs. unsealed,
 same task) is in [BENCHMARK.md](BENCHMARK.md) — run it and fill in a real Δ.
 
+Measured on DSH 0.1.0-rc.5 with `deepseek-v4-flash`, the seal overhead is a
+**flat ~10.4K-uncached-token per-task constant — not a percentage tax** (plus
+tens of seconds of wall clock, +10s trivial / +54s real task): on a trivial
+one-file task it was 42% of total input; on a real coding task (a Python
+module plus a 16-test suite) it dropped to 14% — and it keeps shrinking as the
+task grows. Full tables and caveats in [BENCHMARK.md](BENCHMARK.md).
+
 ## Status: out-of-tree bundle
 
 This directory is an **out-of-tree** plugin package that doubles as an

@@ -52,6 +52,22 @@ stdout, stderr}`）；assignment 只被必须服从它的 worker 精确读一次
 （Python 模块 + 16 个测试）里降到 14%，且任务越大占比越低。完整表格与
 注意事项见 [BENCHMARK.md](BENCHMARK.md)。
 
+## 基准：密封到底花多少
+
+在 DSH 0.1.0-rc.5、`deepseek-v4-flash` 上端到端实测，同一任务跑两遍——
+不密封（A）vs 完整密封仪式（B）：
+
+| 任务（A → B） | 未缓存 Δ | 墙钟 Δ | 占总输入比例 |
+|---|---:|---:|---:|
+| 微型：写一个文件 | +10,420 token | +10.2s | 41.7% |
+| 真实：Python 模块 + 16 个测试 | +10,282 token | +54.3s | **13.8%** |
+
+**密封是每个任务恒定的 ~10.4K 未缓存 token，不是按比例的税。** 任务越大，
+token 账单几乎不动（+10,420 → +10,282），于是它占总输入的比例从微型任务
+的 42% 降到真实任务的 14%，且继续趋近于零。（墙钟略涨，因为仪式多出的
+几次模型往返耗时随思考量走。）完整表格、方法与注意事项见
+[BENCHMARK.md](BENCHMARK.md)。
+
 ## 状态：出树 bundle
 
 本目录是一个**出树**插件包，同时是可安装的 DSH **bundle**：`package.json` 声明 `dsh.bundle = { patch: "./cordis.patch.yml" }`，因此 `dsh plugin add` 会自动激活它的层。用普通 `tsc -p .` 即可编译（见 `tsconfig.json`），尚未注册进 monorepo 的 `tsconfig.host.json` / `knip.json` / 根 workspaces。见[并入 monorepo](#并入-monorepo)。

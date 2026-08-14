@@ -79,6 +79,23 @@ one-file task it was 42% of total input; on a real coding task (a Python
 module plus a 16-test suite) it dropped to 14% — and it keeps shrinking as the
 task grows. Full tables and caveats in [BENCHMARK.md](BENCHMARK.md).
 
+## Benchmark: what sealing actually costs
+
+Measured end-to-end on DSH 0.1.0-rc.5 with `deepseek-v4-flash`, same task run
+twice — unsealed (`A`) vs. the full sealed ceremony (`B`):
+
+| Task (A → B) | uncached Δ | wall-clock Δ | overhead as % of total input |
+|---|---:|---:|---:|
+| Trivial: create one file | +10,420 tokens | +10.2s | 41.7% |
+| Real: Python module + 16-test suite | +10,282 tokens | +54.3s | **13.8%** |
+
+**The seal is a flat ~10.4K-uncached-token per-task constant — not a percentage
+tax.** The token bill barely moves as the task grows (+10,420 → +10,282), so
+its share of a task's input falls from 42% on a trivial one-file job to 14% on
+a real coding task and keeps shrinking. (Wall clock grows a little more, since
+the ceremony adds model round-trips whose latency scales with reasoning.)
+Full per-run tables, method, and caveats: [BENCHMARK.md](BENCHMARK.md).
+
 ## Status: out-of-tree bundle
 
 This directory is an **out-of-tree** plugin package that doubles as an

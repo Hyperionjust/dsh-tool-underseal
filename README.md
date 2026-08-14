@@ -3,6 +3,8 @@
 **English** | [中文](README.zh.md)
 
 ![CI](https://github.com/Hyperionjust/dsh-tool-underseal/actions/workflows/ci.yml/badge.svg)
+![npm](https://img.shields.io/npm/v/dsh-tool-underseal)
+![license](https://img.shields.io/npm/l/dsh-tool-underseal)
 
 > **The one-breath pitch:** chat is transport, not authorization. Authority is a
 > hash-sealed assignment file; evidence is append-only and re-derivable by any

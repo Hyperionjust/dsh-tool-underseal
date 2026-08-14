@@ -3,6 +3,8 @@
 [English](README.md) | **中文**
 
 ![CI](https://github.com/Hyperionjust/dsh-tool-underseal/actions/workflows/ci.yml/badge.svg)
+![npm](https://img.shields.io/npm/v/dsh-tool-underseal)
+![license](https://img.shields.io/npm/l/dsh-tool-underseal)
 
 > **一句话定位：** 聊天是运输，不是授权。授权 = 哈希密封的 assignment 文件；证据 = 只追加、任何第三方可重算；所有边界都 fail-closed——密封工具、worker 签到锁、字节级供应链哨兵，一条 `dsh plugin add dsh-tool-underseal` 全部到手。
 
